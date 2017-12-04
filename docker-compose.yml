@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+    thebackend:
+        image: gnarf/the-backend:dev
+        build:
+            context: ./src
+            dockerfile: Dockerfile
+        ports: 
+            - "5000:80"
+        depends_on:
+            - thedb
+        environment:
+            ConnectionStrings__MasterDatabase: "Server=thedb;Database=master;User=sa;Password=sjhfru363gvs#8757476;MultipleActiveResultSets=true;"
+            ASPNETCORE_ENVIRONMENT: "Development"
+
+    thedb:
+        image: gnarf/the-database:dev
+        build:
+            context: ./db
+            dockerfile: Dockerfile
+        ports: 
+            - "14330:1433"
+        environment:
+            SA_PASSWORD: "sjhfru363gvs#8757476"
